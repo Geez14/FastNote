@@ -33,7 +33,6 @@ java -jar FastNoteApp.jar
 
 ## Automation Windows
 added build process automation.
-added run code
 ```
 !note you must be in the project directory to compile and build
 .\build.bat
