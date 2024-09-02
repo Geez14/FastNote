@@ -16,5 +16,5 @@ javac -d ./out FastNoteApp.java
 ```
 ## Run
 ```code
-java -cp "./out" FirstNoteApp
+java -cp "./out" FastNoteApp
 ```
