@@ -1,4 +1,6 @@
-package modules.noteio;
+package com.geez14.fastnote;
+
+
 
 import javax.swing.JTextArea;
 import java.io.BufferedReader;
