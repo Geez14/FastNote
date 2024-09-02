@@ -1,18 +1,23 @@
 package com.geez14.fastnote;
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class FastNoteComponentsEventHandler implements ActionListener {
   private FastNoteUI ui;
   private JFileChooser fileChooser;
 
+  private FileNameExtensionFilter filter = new FileNameExtensionFilter("Text and Ascii Files", "js", "txt", "java", "c",
+      "cpp", "py", "html", "css", "xml", "json", "md", "csv", "tsv", "sql", "sh", "bat", "log", "yaml", "yml",
+      "properties", "ini", "cfg", "conf", "cnf", "config", "env", "envrc");
+
   public FastNoteComponentsEventHandler(FastNoteUI ui) {
     this.ui = ui;
     fileChooser = new JFileChooser();
+    fileChooser.setFileFilter(filter);
   }
 
   @Override
@@ -47,6 +52,8 @@ public class FastNoteComponentsEventHandler implements ActionListener {
       int result = fileChooser.showSaveDialog(ui);
       if (result == JFileChooser.APPROVE_OPTION) {
         FileOperations.writeFile(ui.getTextArea(), fileChooser.getSelectedFile());
+        ui.isSavedChange = true;
+        ui.setTitle("FastNote1.0(" + fileChooser.getSelectedFile().getName() + ")");
       }
     }
   }

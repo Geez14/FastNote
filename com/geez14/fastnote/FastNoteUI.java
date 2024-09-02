@@ -10,7 +10,9 @@ import javax.swing.JMenu;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.text.AbstractDocument;
 import javax.swing.text.Element;
+import javax.swing.text.Utilities;
 
 import theme.Theme;
 import theme.ThemeInjector;
@@ -20,6 +22,7 @@ import theme.defaults.LightMode;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.JScrollPane;
@@ -67,10 +70,10 @@ public class FastNoteUI extends JFrame {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     initMenueBar();
     initTextArea();
-    setVisible(true);
   }
 
   void initTextArea() {
+
     textArea.addKeyListener(new KeyAdapter() {
       @Override
       public void keyPressed(KeyEvent e) {
@@ -80,7 +83,7 @@ public class FastNoteUI extends JFrame {
     // injecting color
     JScrollPane scrollPane = new JScrollPane(textArea);
     // // Create the line numbers area
-    lineNumbers = new JTextArea("0");
+    lineNumbers = new JTextArea("1");
     lineNumbers.setBackground(Color.LIGHT_GRAY);
     lineNumbers.setEditable(false);
     lineNumbers.setFont(new Font("Calibri", Font.PLAIN, 16));
@@ -93,9 +96,9 @@ public class FastNoteUI extends JFrame {
         // carterPosition is index of the cursor
         int caretPosition = textArea.getDocument().getLength();
         Element root = textArea.getDocument().getDefaultRootElement();
-        StringBuilder text = new StringBuilder("1"+System.lineSeparator());
+        StringBuilder text = new StringBuilder("1" + System.lineSeparator());
         // iterate through the textArea and add line numbers
-        for (int i = 2; i < root.getElementIndex(caretPosition)+2 ; i++) {
+        for (int i = 2; i < root.getElementIndex(caretPosition) + 2; i++) {
           text.append(i).append(System.lineSeparator());
         }
         return text.toString();
@@ -116,9 +119,11 @@ public class FastNoteUI extends JFrame {
         lineNumbers.setText(getText());
       }
     });
-
+    // add another listener for the textArea to makesure the buffer is not more than
+    // fixed size.
     add(scrollPane, BorderLayout.CENTER);
     currentTheme = defaultTheme[0];
+    SwingUtilities.invokeLater(() -> setVisible(true));
     populateTheme();
   }
 
